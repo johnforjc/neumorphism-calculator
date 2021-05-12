@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+
+:root {
+  --bg-primary: #e5e5e5;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --light-color: rgba(255, 255, 255, 1);
+}
+
+*,
+*::before,
+*::after {
+  font-family: "Quicksand", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-primary);
+}
+
+.calculator {
+  width: fit-content;
+  padding: 1rem;
+  background: var(--bg-primary);
+  border-radius: 0.5rem;
+  box-shadow: 10px 10px 15px var(--shadow-color), -10px -10px 15px var(--light-color);
+}
+
+#monitor {
+  font-size: 1.25rem;
+  border-radius: 1.25em;
+  background: var(--bg-primary);
+  width: calc(100% - 5px);
+  height: 2.5em;
+  padding: 0.5em;
+  padding-right: 1.25em;
+  margin-bottom: 0.25em;
+  margin-left: 5px;
+  text-align: right;
+  box-shadow: inset 4px 4px 5px var(--shadow-color), inset -4px -4px 5px var(--light-color);
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 8px 8px;
+}
+
+table tr td {
+  text-align: center;
+  font-size: 1rem;
+  min-width: 3.5em;
+  height: 3.5em;
+  padding: 0.5em;
+  border-radius: 2em;
+  background-color: var(--bg-primary);
+  box-shadow: 4px 4px 5px var(--shadow-color), -4px -4px 5px var(--light-color), inset 0px 0px 0px var(--shadow-color), inset -0px -0px 0px var(--light-color);
+  user-select: none;
+}
+
+table tr td:active {
+  box-shadow: 0px 0px 0px var(--shadow-color), -0px -0px 0px var(--light-color), inset 4px 4px 5px var(--shadow-color), inset -4px -4px 5px var(--light-color);
+}
