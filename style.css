@@ -32,7 +32,7 @@ body {
   box-shadow: 10px 10px 15px var(--shadow-color), -10px -10px 15px var(--light-color);
 }
 
-#monitor {
+.monitor {
   font-size: 1.25rem;
   border-radius: 1.25em;
   background: var(--bg-primary);
@@ -44,6 +44,12 @@ body {
   margin-left: 5px;
   text-align: right;
   box-shadow: inset 4px 4px 5px var(--shadow-color), inset -4px -4px 5px var(--light-color);
+}
+
+#monitorOperation {
+  float: left;
+  text-align: right;
+  width: 1ch;
 }
 
 table {

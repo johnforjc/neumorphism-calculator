@@ -1,22 +1,55 @@
 const tdElements = document.querySelectorAll("td");
 
-console.log(tdElements);
-
 let result = 0,
   num1 = 0,
   num2 = 0,
-  operation = "+";
+  operation = "",
+  temp = "0",
+  decimal = true,
+  positif = true;
 
+// showing on monitor
+function showOnMonitor() {
+  monitorNumber.innerHTML = positif ? temp : "-" + temp;
+  monitorOperation.innerHTML = operation;
+}
+
+// resetAll for C function
+function resetAll() {
+  (result = 0), (num1 = 0), (num2 = 0), (operation = ""), (temp = "0"), (decimal = true), (positif = true);
+}
+
+// computational logic
 function calculatorCompute() {
+  if (num1 == 0 && num2 == 0) {
+    return;
+  }
+  if (num2 == 0) {
+    num2 = parseFloat(temp);
+  }
   switch (operation) {
     case "+":
       result = num1 + num2;
       break;
     case "-":
-      result = num2 - num1;
+      result = num1 - num2;
       break;
     case "/":
-      result = num2 / num1;
+      if (num2 == 0) {
+        // Setting output and showing
+        temp = "Error";
+        operation = "";
+        showOnMonitor();
+
+        // reset all value
+        num1 = 0;
+        num2 = 0;
+        decimal = true;
+        positif = true;
+        temp = "0";
+        return;
+      }
+      result = num1 / num2;
       break;
     case "*":
       result = num1 * num2;
@@ -24,48 +57,51 @@ function calculatorCompute() {
     default:
       break;
   }
+
+  // reset all value and show it
   num1 = 0;
   num2 = 0;
-  operation = "+";
-  monitor.innerHTML = result;
+  operation = "";
+  decimal = true;
+  positif = true;
+  temp = result;
+  showOnMonitor();
+  temp = "0";
 }
 
+// Set operation
 function setOperation(char) {
-  if (num1 == 0) {
-    if (result) {
-      num2 = result;
-      operation = char;
-    } else if (num2) {
-      operation = char;
-    }
-  } else {
-    if (num2) {
-      calculatorCompute();
-      num2 = result;
-      operation = char;
-      num1 = 0;
-    } else {
-      num2 = num1;
-      operation = char;
-      num1 = 0;
-    }
+  if (!positif) temp = "-" + temp;
+  if (result) {
+    num1 = result;
+  } else if (num1 == 0) {
+    num1 = parseFloat(temp);
+    console.log(temp);
+  } else if (num2 == 0) {
+    num2 = parseFloat(temp);
+    console.log(temp);
+  } else if (num1 && num2) {
+    calculatorCompute();
   }
-  result = 0;
+  operation = char;
+  monitorOperation.innerHTML = operation;
+  temp = "0";
+  decimal = true;
+  positif = true;
 }
 
+// add event listener for each table
 tdElements.forEach((element) =>
   element.addEventListener("click", (e) => {
     switch (e.target.innerHTML) {
       case "C":
-        result = 0;
-        num1 = 0;
-        num2 = 0;
-        operation = "+";
-        monitor.innerHTML = num1;
+        resetAll();
+        showOnMonitor();
         break;
       case "+/-":
-        num1 = num1 * -1;
-        monitor.innerHTML = num1;
+        positif = !positif;
+        if (!positif) temp = monitorNumber.innerHTML;
+        showOnMonitor();
         break;
       case "+":
         setOperation("+");
@@ -83,13 +119,16 @@ tdElements.forEach((element) =>
         calculatorCompute();
         break;
       case ".":
-        decimal = true;
+        if (decimal) {
+          temp += e.target.innerHTML;
+          decimal = !decimal;
+          showOnMonitor();
+        }
         break;
       default:
-        num1 = num1 * 10 + parseInt(e.target.innerHTML);
-
-        monitor.innerHTML = num1;
+        temp = temp === "0" ? e.target.innerHTML : temp + e.target.innerHTML;
         result = 0;
+        showOnMonitor();
         break;
     }
   })
